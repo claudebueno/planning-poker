@@ -77,7 +77,7 @@ function joinSession() {
     }
 
     persistData();
-    broadcast({ type: 'JOIN', name: state.myName });
+    broadcast({type: 'JOIN', name: state.myName});
 
     document.getElementById('welcome-screen').classList.remove('active');
     document.getElementById('game-screen').classList.add('active');
@@ -94,12 +94,12 @@ function selectVote(value) {
     document.querySelectorAll('.card').forEach(card => {
         card.classList.toggle('selected', card.dataset.value == value);
     });
-    broadcast({ type: 'VOTE', name: state.myName, vote: value });
+    broadcast({type: 'VOTE', name: state.myName, vote: value});
 }
 
 function revealVotes() {
     state.revealed = true;
-    broadcast({ type: 'REVEAL' });
+    broadcast({type: 'REVEAL'});
     document.getElementById('reveal-btn').textContent = 'Cacher';
 }
 
@@ -107,7 +107,7 @@ function resetSession() {
     state.revealed = false;
     state.myVote = null;
     document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
-    broadcast({ type: 'RESET' });
+    broadcast({type: 'RESET'});
     document.getElementById('results').classList.add('hidden');
     document.getElementById('reveal-btn').textContent = 'Révéler';
 }
@@ -140,7 +140,7 @@ function handleBroadcastMessage(event) {
 
 function addPlayer(name) {
     if (!state.players[name] && Object.keys(state.players).length < CONFIG.MAX_PLAYERS) {
-        state.players[name] = { name, vote: null };
+        state.players[name] = {name, vote: null};
         renderPlayers();
     }
 }
@@ -208,7 +208,8 @@ function loadPersistedData() {
             state.myName = data.myName;
             state.sessionId = data.sessionId;
         }
-    } catch (e) {}
+    } catch (e) {
+    }
 }
 
 // Broadcast helper
