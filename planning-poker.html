@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planning Poker GitHub Pages - 8 Joueurs</title>
+    <style>
+        /* Même CSS que précédemment, adapté */
+        :root { --bg: #f8f9fa; --card-bg: white; --text: #333; --select: #007bff; --reveal: #28a745; --shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        [data-theme="dark"] { --bg: #1a1a1a; --card-bg: #2d2d2d; --text: #eee; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; transition: all 0.3s; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { text-align: center; }
+        #session-url { background: var(--card-bg); padding: 10px; border-radius: 8px; margin: 10px 0; text-align: center; font-family: monospace; }
+        .controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 20px 0; }
+        button { padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; background: var(--select); color: white; font-size: 16px; }
+        button:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 15px; margin: 30px 0; }
+        .card { padding: 20px; border-radius: 12px; cursor: pointer; background: var(--card-bg); box-shadow: var(--shadow); font-weight: bold; font-size: 24px; transition: all 0.2s; text-align: center; }
+        .card:hover, .card.selected { background: var(--select); color: white; transform: scale(1.1); }
+        .card.revealed { background: var(--reveal); }
+        #results { text-align: center; font-size: 28px; font-weight: bold; margin: 20px 0; }
+        .players-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 20px 0; }
+        .player { padding: 15px; background: var(--card-bg); border-radius: 8px; box-shadow: var(--shadow); text-align: center; }
+        .player.voted { background: var(--select); color: white; }
+        .player.revealed { background: var(--reveal); }
+        #name-input { padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; width: 200px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🃏 Planning Poker GitHub Pages</h1>
+        <div id="welcome" style="text-align: center;">
+            <input id="name-input" placeholder="Votre nom...">
+            <br><button onclick="joinGame()">Rejoindre</button>
+        </div>
+        <div id="game" style="display: none;">
+            <div id="session-url"></div>
+            <div class="controls">
+                <input id="story" placeholder="Story à estimer...">
+                <button onclick="revealVotes()">Révéler</button>
+                <button onclick="resetVotes()">Reset</button>
+                <button onclick="toggleTheme()">🌙/☀️</button>
+            </div>
+            <div id="cards" class="cards"></div>
+            <div id="results" style="display: none;"></div>
+            <div id="players" class="players-grid"></div>
+        </div>
+    </div>
+
+    <script>
+        const cards = [0,1,2,3,5,8,13,21,'?','∞'];
+        const params = new URLSearchParams(window.location.search);
+        const sessionId = params.get('session') || 'default';
+        
+        // Canal partagé pour cette session
+        const channel = new BroadcastChannel(`planning-poker-${sessionId}`);
+        let myName = localStorage.getItem(`pp_name_${sessionId}`) || '';
+        let myVote = null;
+        let players = {};
+        let revealed = false;
+
+        // Init cartes
+        cards.forEach(val => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.textContent = val;
+            card.onclick = () => selectVote(val);
+            document.getElementById('cards').appendChild(card);
+        });
+
+        function joinGame() {
+            myName = document.getElementById('name-input').value || 'Anonyme';
+            localStorage.setItem(`pp_name_${sessionId}`, myName);
+            
+            channel.postMessage({ type: 'join', name: myName });
+            document.getElementById('welcome').style.display = 'none';
+            document.getElementById('game').style.display = 'block';
+            document.getElementById('session-url').innerHTML = 
+                `<strong>Session : </strong><a href="?session=${sessionId}" target="_blank">${window.location.origin + window.location.pathname}?session=${sessionId}</a><br>Partagez ce lien !`;
+        }
+
+        function selectVote(value) {
+            myVote = value;
+            document.querySelectorAll('.card').forEach(c => c.classList.toggle('selected', c.textContent == value));
+            channel.postMessage({ type: 'vote', name: myName, vote: value });
+        }
+
+        function revealVotes() {
+            revealed = true;
+            channel.postMessage({ type: 'reveal' });
+        }
+
+        function resetVotes() {
+            revealed = false;
+            myVote = null;
+            channel.postMessage({ type: 'reset' });
+        }
+
+        function updatePlayers(data) {
+            players = data.players || {};
+            const container = document.getElementById('players');
+            container.innerHTML = '';
+            Object.entries(players).forEach(([id, p]) => {
+                const div = document.createElement('div');
+                div.className = 'player';
+                div.innerHTML = `<strong>${p.name}</strong><br>${p.vote === null ? '-' : (revealed ? p.vote : '?')}`;
+                if (p.vote !== null) div.classList.add('voted');
+                if (revealed) div.classList.add('revealed');
+                container.appendChild(div);
+            });
+            if (revealed) calculateResults();
+        }
+
+        function calculateResults() {
+            const votes = Object.values(players)
+                .filter(p => p.vote !== null && p.vote !== '?' && p.vote !== '∞')
+                .map(p => parseFloat(p.vote));
+            if (votes.length === 0) return;
+            const avg = (votes.reduce((a,b)=>a+b,0) / votes.length).toFixed(1);
+            document.getElementById('results').textContent = `Moyenne: ${avg}`;
+            document.getElementById('results').style.display = 'block';
+        }
+
+        // Écoute messages BroadcastChannel
+        channel.onmessage = (e) => {
+            const data = e.data;
+            switch(data.type) {
+                case 'join':
+                    players[data.name] = { name: data.name, vote: null };
+                    updatePlayers({ players });
+                    break;
+                case 'vote':
+                    if (players[data.name]) players[data.name].vote = data.vote;
+                    updatePlayers({ players });
+                    break;
+                case 'reveal':
+                    updatePlayers({ players });
+                    break;
+                case 'reset':
+                    Object.values(players).forEach(p => p.vote = null);
+                    document.getElementById('results').style.display = 'none';
+                    updatePlayers({ players });
+                    break;
+            }
+        };
+
+        function toggleTheme() {
+            document.body.dataset.theme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+        }
+
+        // Auto-join si nom déjà connu
+        if (myName) joinGame();
+    </script>
+</body>
+</html>
