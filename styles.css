@@ -27,6 +27,8 @@
 
 /* Reset & Base */
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
+/*noinspection CssNoGenericFontName*/
 body {
     font-family: var(--font-family);
     background: linear-gradient(135deg, var(--bg-primary) 0%, #e9ecef 100%);

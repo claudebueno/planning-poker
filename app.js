@@ -1,4 +1,6 @@
 // Configuration
+// noinspection JSDeprecatedSymbols
+
 const CONFIG = {
     MAX_PLAYERS: 8,
     CARDS: [0, 1, 2, 3, 5, 8, 13, 21, '?', '∞'],
@@ -34,6 +36,7 @@ function extractSessionId() {
 }
 
 function generateSessionId() {
+    // noinspection JSDeprecatedSymbols
     return 'session-' + Math.random().toString(36).substr(2, 8);
 }
 

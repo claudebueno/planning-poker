@@ -17,7 +17,7 @@
         <!-- Écran d'accueil -->
         <div id="welcome-screen" class="screen active">
             <div class="welcome-card">
-                <input id="player-name" type="text" placeholder="Votre nom..." maxlength="20" autofocus>
+                <label for="player-name"></label><label for="player-name"></label><input id="player-name" type="text" placeholder="Votre nom..." maxlength="20" autofocus>
                 <button onclick="joinSession()" class="btn-primary">Rejoindre la session</button>
                 <div id="session-link" class="session-url"></div>
             </div>
@@ -26,7 +26,7 @@
         <!-- Écran de jeu -->
         <div id="game-screen" class="screen">
             <div class="game-header">
-                <input id="story-title" type="text" placeholder="Story à estimer..." maxlength="80">
+                <label for="story-title"></label><label for="story-title"></label><input id="story-title" type="text" placeholder="Story à estimer..." maxlength="80">
                 <div class="game-controls">
                     <button onclick="revealVotes()" class="btn-reveal" id="reveal-btn">Révéler</button>
                     <button onclick="resetSession()" class="btn-reset">Reset</button>
