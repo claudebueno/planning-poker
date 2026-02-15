@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planning Poker Agile - 8 Joueurs</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🃏</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🃏 Planning Poker Agile</h1>
+            <p>8 joueurs max - Temps réel - GitHub Pages</p>
+        </header>
+
+        <!-- Écran d'accueil -->
+        <div id="welcome-screen" class="screen active">
+            <div class="welcome-card">
+                <input id="player-name" type="text" placeholder="Votre nom..." maxlength="20" autofocus>
+                <button onclick="joinSession()" class="btn-primary">Rejoindre la session</button>
+                <div id="session-link" class="session-url"></div>
+            </div>
+        </div>
+
+        <!-- Écran de jeu -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <input id="story-title" type="text" placeholder="Story à estimer..." maxlength="80">
+                <div class="game-controls">
+                    <button onclick="revealVotes()" class="btn-reveal" id="reveal-btn">Révéler</button>
+                    <button onclick="resetSession()" class="btn-reset">Reset</button>
+                    <button onclick="toggleTheme()" class="btn-theme" id="theme-btn">🌙</button>
+                </div>
+            </div>
+
+            <div id="cards-container" class="cards-grid"></div>
+            
+            <div id="results" class="results hidden">📊 Moyenne: --</div>
+            
+            <div id="players-container" class="players-grid"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
