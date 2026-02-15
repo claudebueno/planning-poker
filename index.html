@@ -2,46 +2,51 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Planning Poker Agile - 8 Joueurs</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🃏</text></svg>">
+    <link href="styles.css" rel="stylesheet">
+    <link href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🃏</text></svg>"
+          rel="icon">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🃏 Planning Poker Agile</h1>
-            <p>8 joueurs max - Temps réel - GitHub Pages</p>
-        </header>
+<div class="container">
+    <header>
+        <h1>🃏 Planning Poker Agile</h1>
+        <p>8 joueurs max - Temps réel - GitHub Pages</p>
+    </header>
 
-        <!-- Écran d'accueil -->
-        <div id="welcome-screen" class="screen active">
-            <div class="welcome-card">
-                <label for="player-name"></label><label for="player-name"></label><input id="player-name" type="text" placeholder="Votre nom..." maxlength="20" autofocus>
-                <button onclick="joinSession()" class="btn-primary">Rejoindre la session</button>
-                <div id="session-link" class="session-url"></div>
-            </div>
-        </div>
-
-        <!-- Écran de jeu -->
-        <div id="game-screen" class="screen">
-            <div class="game-header">
-                <label for="story-title"></label><label for="story-title"></label><input id="story-title" type="text" placeholder="Story à estimer..." maxlength="80">
-                <div class="game-controls">
-                    <button onclick="revealVotes()" class="btn-reveal" id="reveal-btn">Révéler</button>
-                    <button onclick="resetSession()" class="btn-reset">Reset</button>
-                    <button onclick="toggleTheme()" class="btn-theme" id="theme-btn">🌙</button>
-                </div>
-            </div>
-
-            <div id="cards-container" class="cards-grid"></div>
-            
-            <div id="results" class="results hidden">📊 Moyenne: --</div>
-            
-            <div id="players-container" class="players-grid"></div>
+    <!-- Écran d'accueil -->
+    <div class="screen active" id="welcome-screen">
+        <div class="welcome-card">
+            <label for="player-name"></label><label for="player-name"></label><input autofocus id="player-name"
+                                                                                     maxlength="20"
+                                                                                     placeholder="Votre nom..." type="text">
+            <button class="btn-primary" onclick="joinSession()">Rejoindre la session</button>
+            <div class="session-url" id="session-link"></div>
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <!-- Écran de jeu -->
+    <div class="screen" id="game-screen">
+        <div class="game-header">
+            <label for="story-title"></label><label for="story-title"></label><input id="story-title" maxlength="80"
+                                                                                     placeholder="Story à estimer..."
+                                                                                     type="text">
+            <div class="game-controls">
+                <button class="btn-reveal" id="reveal-btn" onclick="revealVotes()">Révéler</button>
+                <button class="btn-reset" onclick="resetSession()">Reset</button>
+                <button class="btn-theme" id="theme-btn" onclick="toggleTheme()">🌙</button>
+            </div>
+        </div>
+
+        <div class="cards-grid" id="cards-container"></div>
+
+        <div class="results hidden" id="results">📊 Moyenne: --</div>
+
+        <div class="players-grid" id="players-container"></div>
+    </div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>

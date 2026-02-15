@@ -8,9 +8,9 @@
     --color-success: #28a745;
     --color-warning: #ffc107;
     --color-danger: #dc3545;
-    --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
-    --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
     --border-radius: 12px;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -26,7 +26,11 @@
 }
 
 /* Reset & Base */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 /*noinspection CssNoGenericFontName*/
 body {
@@ -38,7 +42,10 @@ body {
     padding: 20px;
 }
 
-.container { max-width: 900px; margin: 0 auto; }
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
 
 /* Header */
 header {
@@ -46,6 +53,7 @@ header {
     margin-bottom: 40px;
     padding: 20px 0;
 }
+
 header h1 {
     font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 700;
@@ -55,7 +63,11 @@ header h1 {
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
-header p { color: var(--text-secondary); font-size: 1.1rem; }
+
+header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
 
 /* Écrans */
 .screen {
@@ -63,8 +75,21 @@ header p { color: var(--text-secondary); font-size: 1.1rem; }
     min-height: 60vh;
     animation: fadeIn 0.5s ease-out;
 }
-.screen.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.screen.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 /* Welcome Card */
 .welcome-card {
@@ -76,6 +101,7 @@ header p { color: var(--text-secondary); font-size: 1.1rem; }
     max-width: 400px;
     margin: 0 auto;
 }
+
 #player-name {
     width: 100%;
     padding: 16px 20px;
@@ -85,10 +111,11 @@ header p { color: var(--text-secondary); font-size: 1.1rem; }
     margin-bottom: 20px;
     transition: var(--transition);
 }
+
 #player-name:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
 }
 
 /* Boutons */
@@ -103,30 +130,41 @@ header p { color: var(--text-secondary); font-size: 1.1rem; }
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
+
 .btn-primary {
     background: linear-gradient(135deg, var(--color-primary), #0056b3);
     color: white;
     width: 100%;
     font-size: 1.3rem;
 }
-.btn-primary:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
 .btn-reveal {
     background: linear-gradient(135deg, var(--color-success), #218838);
     color: white;
     min-width: 140px;
 }
+
 .btn-reset {
     background: linear-gradient(135deg, var(--color-danger), #c82333);
     color: white;
     min-width: 100px;
 }
-.btn-theme { 
-    background: var(--bg-secondary); 
+
+.btn-theme {
+    background: var(--bg-secondary);
     color: var(--text-primary);
     width: 60px;
     font-size: 1.3rem;
 }
-.btn-theme:hover { transform: rotate(180deg); }
+
+.btn-theme:hover {
+    transform: rotate(180deg);
+}
 
 /* Game Header */
 .game-header {
@@ -141,6 +179,7 @@ header p { color: var(--text-secondary); font-size: 1.1rem; }
     align-items: center;
     justify-content: space-between;
 }
+
 #story-title {
     flex: 1;
     min-width: 300px;
@@ -148,14 +187,19 @@ header p { color: var(--text-secondary); font-size: 1.1rem; }
     font-size: 1.3rem;
     border: 2px solid transparent;
     border-radius: var(--border-radius);
-    background: rgba(255,255,255,0.7);
+    background: rgba(255, 255, 255, 0.7);
 }
+
 #story-title:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
 }
-.game-controls { display: flex; gap: 12px; }
+
+.game-controls {
+    display: flex;
+    gap: 12px;
+}
 
 /* Cartes */
 .cards-grid {
@@ -165,6 +209,7 @@ header p { color: var(--text-secondary); font-size: 1.1rem; }
     margin: 40px 0;
     justify-items: center;
 }
+
 .card {
     aspect-ratio: 1;
     padding: 24px 12px;
@@ -179,34 +224,51 @@ header p { color: var(--text-secondary); font-size: 1.1rem; }
     position: relative;
     overflow: hidden;
 }
+
 .card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: inherit;
     opacity: 0;
     transition: var(--transition);
 }
+
 .card:hover {
     transform: translateY(-8px) scale(1.05);
     box-shadow: var(--shadow-lg);
 }
-.card:hover::before { opacity: 0.1; }
+
+.card:hover::before {
+    opacity: 0.1;
+}
+
 .card.selected {
     background: linear-gradient(135deg, var(--color-primary), #0056b3);
     color: white;
     transform: scale(1.15) !important;
-    box-shadow: 0 12px 32px rgba(0,123,255,0.4);
+    box-shadow: 0 12px 32px rgba(0, 123, 255, 0.4);
 }
-.card.revealed { 
+
+.card.revealed {
     background: linear-gradient(135deg, var(--color-success), #218838);
     color: white;
     animation: revealPulse 0.6s ease-out;
 }
+
 @keyframes revealPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.08);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* Résultats */
@@ -229,6 +291,7 @@ header p { color: var(--text-secondary); font-size: 1.1rem; }
     gap: 16px;
     margin-top: 40px;
 }
+
 .player-card {
     background: var(--bg-secondary);
     padding: 20px 16px;
@@ -239,40 +302,53 @@ header p { color: var(--text-secondary); font-size: 1.1rem; }
     position: relative;
     overflow: hidden;
 }
+
 .player-card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 4px;
     background: var(--color-primary);
     transform: scaleX(0);
     transition: var(--transition);
 }
+
 .player-name {
     font-weight: 700;
     font-size: 1.1rem;
     margin-bottom: 8px;
     display: block;
 }
+
 .player-vote {
     font-size: 2rem;
     font-weight: 800;
     min-height: 2.2em;
 }
-.player-card.voted .player-vote { color: var(--color-primary); }
+
+.player-card.voted .player-vote {
+    color: var(--color-primary);
+}
+
 .player-card.revealed {
     background: linear-gradient(135deg, var(--color-success), #51cf66);
     color: white;
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
 }
-.player-card.revealed::before { transform: scaleX(1); background: rgba(255,255,255,0.3); }
+
+.player-card.revealed::before {
+    transform: scaleX(1);
+    background: rgba(255, 255, 255, 0.3);
+}
 
 /* Session URL */
 .session-url {
     margin-top: 20px;
     padding: 16px;
-    background: rgba(0,123,255,0.1);
+    background: rgba(0, 123, 255, 0.1);
     border: 2px dashed var(--color-primary);
     border-radius: var(--border-radius);
     font-family: monospace;
@@ -282,17 +358,40 @@ header p { color: var(--text-secondary); font-size: 1.1rem; }
 
 /* Responsive */
 @media (max-width: 768px) {
-    body { padding: 10px; }
-    .game-header { flex-direction: column; align-items: stretch; }
-    .game-controls { justify-content: center; }
-    #story-title { order: 2; }
-    .cards-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    body {
+        padding: 10px;
+    }
+
+    .game-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .game-controls {
+        justify-content: center;
+    }
+
+    #story-title {
+        order: 2;
+    }
+
+    .cards-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
 }
 
 @media (max-width: 480px) {
-    .cards-grid { grid-template-columns: repeat(3, 1fr); }
-    .players-grid { grid-template-columns: repeat(2, 1fr); }
+    .cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .players-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 /* Classes utilitaires */
-.hidden { display: none !important; }
+.hidden {
+    display: none !important;
+}
