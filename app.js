@@ -1,6 +1,4 @@
 // Configuration
-// noinspection JSDeprecatedSymbols
-
 const CONFIG = {
     MAX_PLAYERS: 8,
     CARDS: [0, 1, 2, 3, 5, 8, 13, 21, '?', '∞'],
@@ -36,7 +34,6 @@ function extractSessionId() {
 }
 
 function generateSessionId() {
-    // noinspection JSDeprecatedSymbols
     return 'session-' + Math.random().toString(36).substr(2, 8);
 }
 
@@ -73,15 +70,15 @@ function renderCards() {
 function joinSession() {
     const nameInput = document.getElementById('player-name');
     state.myName = nameInput.value.trim() || 'Anonyme';
-    
+
     if (state.myName.length < 2) {
         nameInput.style.borderColor = 'var(--color-danger)';
         return;
     }
-    
+
     persistData();
     broadcast({ type: 'JOIN', name: state.myName });
-    
+
     document.getElementById('welcome-screen').classList.remove('active');
     document.getElementById('game-screen').classList.add('active');
     nameInput.style.borderColor = '';
@@ -159,26 +156,26 @@ function updatePlayerVote(name, vote) {
 function renderPlayers() {
     const container = document.getElementById('players-container');
     container.innerHTML = '';
-    
+
     Object.entries(state.players).forEach(([name, player]) => {
         const playerCard = document.createElement('div');
         playerCard.className = 'player-card';
-        
-        const displayVote = state.revealed 
-            ? (player.vote || '-') 
+
+        const displayVote = state.revealed
+            ? (player.vote || '-')
             : (player.vote ? '?' : '-');
-            
+
         playerCard.innerHTML = `
             <div class="player-name">${name}</div>
             <div class="player-vote">${displayVote}</div>
         `;
-        
+
         if (player.vote !== null) playerCard.classList.add('voted');
         if (state.revealed && player.vote !== null) playerCard.classList.add('revealed');
-        
+
         container.appendChild(playerCard);
     });
-    
+
     if (state.revealed && Object.values(state.players).some(p => p.vote !== null)) {
         calculateResults();
     }
@@ -188,7 +185,7 @@ function calculateResults() {
     const numericVotes = Object.values(state.players)
         .filter(p => p.vote !== null && p.vote !== '?' && p.vote !== '∞' && !isNaN(p.vote))
         .map(p => parseFloat(p.vote));
-        
+
     if (numericVotes.length > 1) {
         const average = (numericVotes.reduce((a, b) => a + b, 0) / numericVotes.length).toFixed(1);
         document.getElementById('results').textContent = `📊 Moyenne: ${average} (${numericVotes.length} votes)`;
